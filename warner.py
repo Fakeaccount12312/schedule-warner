@@ -14,18 +14,17 @@ session = webuntis.Session(
 session.login()
 
 student = session.students().filter(full_name="Stefan Wietschorke")[0]
-date = datetime.date(2020, 10, 21)
+date = datetime.date.today()
 timetable = session.timetable(start=date, end=date, student=student)
 timetable = sorted(timetable, key=lambda x: x.start)
 normal_day = True
 
-session.logout()
-
-leds = {"green": LED(), "yellow": LED(), "red": LED()}
+leds = {"green": LED(24), "yellow": LED(7), "red": LED(21)}
 led_modes = {"green": 0, "yellow": 0, "red": 0}
 
 if timetable:
     if all([lesson.code == "cancelled" for lesson in timetable]):
+        session.logout()
         while True:
             leds["green"].on()
             sleep(0.5)
@@ -59,6 +58,9 @@ if timetable:
         if normal_day:
             # nothing unusual occurs
             led_modes["red"] = 1
+
+    session.logout()
+
     for led in ("green", "yellow", "red"):
         if led_modes[led] == 1:
             leds[led].on()
