@@ -1,7 +1,12 @@
 import webuntis
 import datetime
 from gpiozero import LED
+from sys import argv
 from time import sleep
+
+if argv[1] == "-stop":
+    leds = {"green": LED(24), "yellow": LED(7), "red": LED(21)}
+    exit()
 
 session = webuntis.Session(
     server='nessa.webuntis.com',
