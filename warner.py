@@ -56,7 +56,7 @@ if timetable:
             # something in the first hour has changed
             led_modes["yellow"] = 1
             normal_day = False
-        elif any([lesson.original_teachers or lesson.original_rooms or lesson.code for lesson in timetable]):
+        elif any([lesson.original_teachers or lesson.original_rooms or lesson.code == "irregular" for lesson in timetable]):
             # something has changed later that day
             led_modes["yellow"] = "blinking"
             normal_day = False
